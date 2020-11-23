@@ -26,3 +26,9 @@ export function getAllStockId() {
     url: `/getAllStockId`
   })
 }
+
+export function getNameById(){
+  return Myrequst.get({
+    url:`/getNameById`,
+  })
+}

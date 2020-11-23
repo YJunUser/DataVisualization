@@ -2,12 +2,11 @@
   <div class="app-container">
     <el-select v-model="value" placeholder="请选择" @change="Reshow">
       <el-option
-        v-for="item in AllStockId"
-        :key="item"
-        :label="item"
-        :value="item">
-
-      </el-option>
+        v-for="item in IdAndName"
+        :key="item['股票代码']"
+        :label="item['股票名称']"
+        :value="item['股票代码']+'.json'"
+      />
     </el-select>
     <el-table
       v-loading="listLoading"
@@ -84,7 +83,7 @@
 </template>
 
 <script>
-import { getList } from '@/api/table'
+import {getList, getNameById} from '@/api/table'
 import { getTableData } from '@/api/table'
 import { getAllStockId } from '@/api/table'
 
@@ -103,8 +102,8 @@ export default {
     return {
       list: null,
       listLoading: true,
-      AllStockId: null,
-      value: null
+      value: null,
+      IdAndName:[]
     }
   },
 
@@ -128,9 +127,8 @@ export default {
         this.list = res
         this.listLoading = false
       })
-      getAllStockId().then(res => {
-        console.log(res)
-        this.AllStockId = res
+      getNameById().then(res=>{
+        this.IdAndName=res;
       })
     }
   }

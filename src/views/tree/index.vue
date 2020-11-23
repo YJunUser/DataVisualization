@@ -12,10 +12,10 @@
     <!--    />-->
     <el-select v-model="value" placeholder="请选择" @change="Reshow">
       <el-option
-        v-for="item in AllStockId"
-        :key="item"
-        :label="item"
-        :value="item"
+        v-for="item in IdAndName"
+        :key="item['股票代码']"
+        :label="item['股票名称']"
+        :value="item['股票代码']+'.json'"
       />
     </el-select>
     <kline :currentSelection="value"></kline>
@@ -25,15 +25,15 @@
 <script>
 import { getAllStockId } from '../../api/table'
 import Kline from './childcomponents/Kline'
-import {getTableData} from '../../api/table'
+import {getNameById} from "../../api/table";
 
 export default {
   components: { Kline },
   data() {
     return {
       loading: true,
-      AllStockId: null,
-      value:'sh600400.json'
+      value:'',
+      IdAndName:[]
       // filterText: '',
       // data2: [{
       //   id: 1,
@@ -96,9 +96,11 @@ export default {
       //   this.list = response.data.items
       //   this.listLoading = false
       // })
-      getAllStockId().then(res => {
-        this.AllStockId = res
+      getNameById().then(res=>{
+        this.IdAndName=res;
       })
+
+
     },
     Reshow() {
       console.log(this.value);
