@@ -32,3 +32,9 @@ export function getNameById(){
     url:`/getNameById`,
   })
 }
+
+export function getYearMount(){
+  return Myrequst.get({
+    url:`/getYearMount`
+  })
+}
