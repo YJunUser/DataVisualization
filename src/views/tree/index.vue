@@ -18,7 +18,7 @@
         :value="item"
       />
     </el-select>
-    <kline></kline>
+    <kline :currentSelection="value"></kline>
   </div>
 </template>
 
@@ -33,7 +33,7 @@ export default {
     return {
       loading: true,
       AllStockId: null,
-      value: null
+      value:'sh600400.json'
       // filterText: '',
       // data2: [{
       //   id: 1,
@@ -101,11 +101,9 @@ export default {
       })
     },
     Reshow() {
-      console.log('success')
+      console.log(this.value);
     },
-    getKlinData(){
 
-    }
 
   }
 }
