@@ -7,22 +7,22 @@
 <script>
 
 import { mapGetters } from 'vuex'
-import {getNameById} from "@/api/table";
-import {getYearMount} from "@/api/table";
+import { getNameById } from '@/api/table'
+import { getYearMount } from '@/api/table'
 
 export default {
   name: 'Dashboard',
-  created() {
-    this.fetchData();
-  },
-  data(){
-    return{
-      idandName:[],
-      tabledata:[],
-      jdData2:[],
-      YearMount:[]
+  data() {
+    return {
+      idandName: [],
+      tabledata: [],
+      jdData2: [],
+      YearMount: []
 
     }
+  },
+  created() {
+    this.fetchData()
   },
   computed: {
     ...mapGetters([
@@ -30,23 +30,22 @@ export default {
     ])
   },
   mounted() {
-    //this.drawLine()
+    // this.drawLine()
   },
   methods: {
-    showTable(){
+    showTable() {
       this.drawLine()
     },
-    fetchData(){
-      getNameById().then(res=>{
-        this.idandName=res;
+    fetchData() {
+      getNameById().then(res => {
+        this.idandName = res
       })
-      getYearMount().then(res=>{
-        this.YearMount=res;
+      getYearMount().then(res => {
+        this.YearMount = res
       })
-
     },
     drawLine() {
-      for(let item of this.idandName){
+      for (const item of this.idandName) {
         this.jdData2.push(item['股票名称'])
       }
 
@@ -59,23 +58,23 @@ export default {
       //   ['香港同胞', '澳门同胞', '台湾同胞', '日  本', '韩  国', '蒙  古', '印度尼西亚', '马来西亚', '菲律宾', '新加坡', '泰  国', '印  度', '越  南', '缅  甸', '朝  鲜', '巴基斯坦', '其  它'],
       //   ['香港同胞', '澳门同胞', '台湾同胞', '日  本', '韩  国', '蒙  古', '印度尼西亚', '马来西亚', '菲律宾', '新加坡', '泰  国', '印  度', '越  南', '缅  甸', '朝  鲜', '巴基斯坦', '其  它']
       // ]
-      let jdData=[this.jdData2,this.jdData2,this.jdData2];
+      const jdData = [this.jdData2, this.jdData2, this.jdData2]
 
       // var data = [
       //   [13.2, 1.11, 13.6, 9284, 64138, 2237, 4779, 48877, 2371, 36224, 12956, 2499, 4778, 594, 717, 534, 16487],
       //   [15.26, 1.31, 16.68, 10331, 91580, 1909, 40469, 67490, 1765, 36982, 15371, 3643, 2871, 762, 962, 757, 34414],
       //   [14.23, 1.31, 21.13, 10873, 94964, 2966, 129748, 59827, 8519, 38344, 18495, 3531, 1369, 544, 2005, 975, 33855]
       // ]
-      let data=this.YearMount;
+      const data = this.YearMount
       const option = {
 
         baseOption: {
-          backgroundColor: '#2c343c', //背景颜色
+          backgroundColor: '#2c343c', // 背景颜色
           timeline: {
             data: years,
             axisType: 'category',
             autoPlay: true,
-            playInterval: 1500, //播放速度
+            playInterval: 1500, // 播放速度
 
             left: '5%',
             right: '5%',
@@ -123,7 +122,7 @@ export default {
             bottom: '8%',
             textStyle: {
               fontSize: 50,
-              color: 'black' //标题字体颜色
+              color: 'black' // 标题字体颜色
             }
           },
           tooltip: {
@@ -150,39 +149,38 @@ export default {
             offset: '37',
             'type': 'category',
             interval: 50,
-            //inverse: ture,//图表倒叙或者正序排版
+            // inverse: ture,//图表倒叙或者正序排版
             data: '',
             nameTextStyle: {
               color: 'red'
             },
 
             axisLabel: {
-              //rotate:45,
+              // rotate:45,
               show: false,
               textStyle: {
                 fontSize: 32,
 
                 color: function(params, Index) { // 标签国家字体颜色
-
-                  //color:function(d){return "#"+Math.floor(Math.random()*(256*256*256-1)).toString(16);//随机生成颜色
+                  // color:function(d){return "#"+Math.floor(Math.random()*(256*256*256-1)).toString(16);//随机生成颜色
 
                   var colorarrays = ['#6bc0fb', '#7fec9d', '#fedd8b', '#ffa597', '#84e4dd', '#749f83',
                     '#ca8622', '#bda29a', '#a8d8ea', '#aa96da', '#fcbad3', '#ffffd2',
                     '#f38181', '#fce38a', '#eaffd0', '#95e1d3', '#e3fdfd', '#749f83', '#ca8622'
                   ]
 
-                  //console.log("111", Index, colorarrays[Index],params); //打印序列
+                  // console.log("111", Index, colorarrays[Index],params); //打印序列
 
                   return colorarrays[jdData[0].indexOf(params)]
                 }
 
-              }, //rotate:45,
+              }, // rotate:45,
               interval: 50
             },
             axisLine: {
 
               lineStyle: {
-                color: 'balck' //Y轴颜色
+                color: 'balck' // Y轴颜色
               }
             },
             splitLine: {
@@ -197,13 +195,13 @@ export default {
             'type': 'value',
             'name': '',
 
-            splitNumber: 8, //轴线个数
+            splitNumber: 8, // 轴线个数
             nameTextStyle: {
               color: 'balck'
             },
             axisLine: {
               lineStyle: {
-                color: '#ffa597' //X轴颜色
+                color: '#ffa597' // X轴颜色
               }
             },
             axisLabel: {
@@ -235,7 +233,7 @@ export default {
             label: {
               normal: {
                 show: true,
-                position: 'right', //数值显示在右侧
+                position: 'right', // 数值显示在右侧
                 formatter: '{c}'
               }
             },
@@ -243,87 +241,85 @@ export default {
               normal: {
                 color: function(params) {
                   // build a color map as your need.
-                  //color:function(d){return "#"+Math.floor(Math.random()*(256*256*256-1)).toString(16);//随机生成颜色
+                  // color:function(d){return "#"+Math.floor(Math.random()*(256*256*256-1)).toString(16);//随机生成颜色
                   var colorList = ['#6bc0fb', '#7fec9d', '#fedd8b', '#ffa597', '#84e4dd', '#749f83',
                     '#ca8622', '#bda29a', '#a8d8ea', '#aa96da', '#fcbad3', '#ffffd2',
                     '#f38181', '#fce38a', '#eaffd0', '#95e1d3', '#e3fdfd', '#749f83', '#ca8622'
                   ]
                   // return colorList[params.dataIndex]
 
-                  //console.log('111', params.name) //打印序列
+                  // console.log('111', params.name) //打印序列
                   return colorList[jdData[0].indexOf(params.name)]
                 }
 
               }
             }
           },
-            {
-              'name': '',
-              'type': 'bar',
-              markLine: {
+          {
+            'name': '',
+            'type': 'bar',
+            markLine: {
 
-                label: {
-                  normal: {
-                    show: false
-                  }
-                },
-                lineStyle: {
-
-                  normal: {
-                    color: 'red',
-                    width: 3
-                  }
-                }
-              },
-              barWidth: '50%',
-              barGap: '-100%',
               label: {
                 normal: {
-                  show: true,
-                  fontSize: 16,  //标签国家字体大小
-                  position: 'left', //数值显示在右侧
-                  formatter: function(p) {
-                    return p.name
-                  }
+                  show: false
                 }
               },
-              itemStyle: {
+              lineStyle: {
+
                 normal: {
-
-                  color: function(params) {
-                    // build a color map as your need.
-                    //color:function(d){return "#"+Math.floor(Math.random()*(256*256*256-1)).toString(16);//随机生成颜色
-                    var colorList = ['#6bc0fb', '#7fec9d', '#fedd8b', '#ffa597', '#84e4dd', '#749f83',
-                      '#ca8622', '#bda29a', '#a8d8ea', '#aa96da', '#fcbad3', '#ffffd2',
-                      '#f38181', '#fce38a', '#eaffd0', '#95e1d3', '#e3fdfd', '#749f83', '#ca8622'
-                    ]
-                    // return colorList[params.dataIndex]
-
-                    // console.log("111", params.name); //打印序列
-                    return colorList[jdData[0].indexOf(params.name)]
-                  }
-
+                  color: 'red',
+                  width: 3
                 }
               }
+            },
+            barWidth: '50%',
+            barGap: '-100%',
+            label: {
+              normal: {
+                show: true,
+                fontSize: 16, // 标签国家字体大小
+                position: 'left', // 数值显示在右侧
+                formatter: function(p) {
+                  return p.name
+                }
+              }
+            },
+            itemStyle: {
+              normal: {
+
+                color: function(params) {
+                  // build a color map as your need.
+                  // color:function(d){return "#"+Math.floor(Math.random()*(256*256*256-1)).toString(16);//随机生成颜色
+                  var colorList = ['#6bc0fb', '#7fec9d', '#fedd8b', '#ffa597', '#84e4dd', '#749f83',
+                    '#ca8622', '#bda29a', '#a8d8ea', '#aa96da', '#fcbad3', '#ffffd2',
+                    '#f38181', '#fce38a', '#eaffd0', '#95e1d3', '#e3fdfd', '#749f83', '#ca8622'
+                  ]
+                  // return colorList[params.dataIndex]
+
+                  // console.log("111", params.name); //打印序列
+                  return colorList[jdData[0].indexOf(params.name)]
+                }
+
+              }
             }
+          }
           ],
 
           animationEasingUpdate: 'quinticInOut',
-          animationDurationUpdate: 1500 //动画效果
+          animationDurationUpdate: 1500 // 动画效果
         },
 
         options: []
       }
       for (var n = 0; n < years.length; n++) {
-
         var res = []
-        //alert(jdData.length);
+        // alert(jdData.length);
         for (let j = 0; j < data[n].length; j++) {
           res.push({
             name: jdData[n][j],
             value: data[n][j]
           })
-
         }
 
         res.sort(function(a, b) {
@@ -336,7 +332,7 @@ export default {
 
         var res1 = []
         var res2 = []
-        //console.log(res);
+        // console.log(res);
         for (let t = 0; t < res.length; t++) {
           res1[t] = res[t].name
           res2[t] = res[t].value

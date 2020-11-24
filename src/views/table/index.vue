@@ -1,16 +1,24 @@
 <template>
   <div class="app-container">
-    <el-select v-model="value" placeholder="请选择" @change="Reshow">
-      <el-option
-        v-for="item in IdAndName"
-        :key="item['股票代码']"
-        :label="item['股票名称']"
-        :value="item['股票代码']+'.json'"
+    <div>
+      <el-select v-model="value" placeholder="请选择" style="margin-bottom: 10px" @change="Reshow">
+        <el-option
+          v-for="item in IdAndName"
+          :key="item['股票代码']"
+          :label="item['股票名称']"
+          :value="item['股票代码']+'.json'"
+        />
+      </el-select>
+      <el-input
+        v-model="search"
+        style="width:200px;display: inline-block;float: right"
+        size="large"
+        placeholder="输入关键字搜索"
       />
-    </el-select>
+    </div>
     <el-table
       v-loading="listLoading"
-      :data="list"
+      :data="list.filter(data=> !search || data['交易日期'].toLowerCase().includes(search.toLowerCase()))"
       element-loading-text="Loading"
       border
       fit
@@ -67,25 +75,14 @@
           {{ scope.row['最高价'] }}
         </template>
       </el-table-column>
-      <el-table-column class-name="status-col" label="Status" width="110" align="center">
-        <template slot-scope="scope">
-          <el-tag :type="scope.row.status | statusFilter">{{ scope.row.status }}</el-tag>
-        </template>
-      </el-table-column>
-      <el-table-column align="center" prop="created_at" label="Display_time" width="200">
-        <template slot-scope="scope">
-          <i class="el-icon-time"/>
-          <span>{{ scope.row.display_time }}</span>
-        </template>
-      </el-table-column>
     </el-table>
   </div>
 </template>
 
 <script>
-import {getList, getNameById} from '@/api/table'
+import { getNameById } from '@/api/table'
 import { getTableData } from '@/api/table'
-import { getAllStockId } from '@/api/table'
+
 
 export default {
   filters: {
@@ -103,7 +100,8 @@ export default {
       list: null,
       listLoading: true,
       value: null,
-      IdAndName:[]
+      IdAndName: [],
+      search: null
     }
   },
 
@@ -127,8 +125,8 @@ export default {
         this.list = res
         this.listLoading = false
       })
-      getNameById().then(res=>{
-        this.IdAndName=res;
+      getNameById().then(res => {
+        this.IdAndName = res
       })
     }
   }
