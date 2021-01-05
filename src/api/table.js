@@ -38,3 +38,9 @@ export function getYearMount(){
     url:`/getYearMount`
   })
 }
+
+export function getYearAvage() {
+  return Myrequst.get({
+    url: `/compare`
+  })
+}

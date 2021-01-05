@@ -3,37 +3,36 @@
 </template>
 
 <script>
-import {getTableData} from "@/api/table";
+import { getTableData } from '@/api/table'
 
 export default {
-  name: 'Kline', watch:{
-    currentSelection(newvalue){
-      getTableData(newvalue).then(res=>{
-        let result=[];
-        for(let item of res){
-          //arr.push(Object.values(item));
-          let arr=[];
+  name: 'Kline',
+  props: {
+    currentSelection: {
+      type: String
+    }
+  },
+  data() {
+    return {
+      rawData: []
+    }
+  },
+  watch: {
+    currentSelection(newvalue) {
+      getTableData(newvalue).then(res => {
+        const result = []
+        for (const item of res) {
+          const arr = []
           arr.push(item['交易日期'])
           arr.push(item['开盘价'])
           arr.push(item['收盘价'])
           arr.push(item['最高价'])
           arr.push(item['最低价'])
-          result.push(arr);
+          result.push(arr)
         }
-        this.rawData=result;
-        this.drawLine();
-
+        this.rawData = result
+        this.drawLine()
       })
-    }
-  },
-  props:{
-    currentSelection:{
-      type:String
-    }
-  },
-  data() {
-    return {
-      rawData:[]
     }
   },
   mounted() {
@@ -44,7 +43,7 @@ export default {
       // 基于准备好的dom，初始化echarts实例
       const myChart = this.$echarts.init(document.getElementById('myChart'))
       // 绘制图表
-      var data0 = splitData(this.rawData);
+      var data0 = splitData(this.rawData)
 
       function splitData(rawData) {
         var categoryData = []
@@ -172,29 +171,6 @@ export default {
             markLine: {
               symbol: ['none', 'none'],
               data: [
-                // [
-                //     {
-                //         name: 'from lowest to highest',
-                //         type: 'min',
-                //         valueDim: 'lowest',
-                //         symbol: 'circle',
-                //         symbolSize: 10,
-                //         label: {
-                //             normal: {show: false},
-                //             emphasis: {show: false}
-                //         }
-                //     },
-                //     {
-                //         type: 'max',
-                //         valueDim: 'highest',
-                //         symbol: 'circle',
-                //         symbolSize: 10,
-                //         label: {
-                //             normal: {show: false},
-                //             emphasis: {show: false}
-                //         }
-                //     }
-                // ],
                 {
                   name: 'min line on close',
                   type: 'min',
